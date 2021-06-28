@@ -21,3 +21,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for more information on contributing to
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
+
+## MTSU Cloud Infrastructure Team
+Joshua L. Phillips (jlphillipsphd - Joshua.Phillips@mtsu.edu)
+
