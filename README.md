@@ -26,3 +26,4 @@ This project is licensed under the [MIT License](LICENSE).
 Joshua L. Phillips (jlphillipsphd - Joshua.Phillips@mtsu.edu)
 Caleb Griffy (cgg3a - cgg3a@mtmail.mtsu.edu)
 Eric K. Embry (eke2k - eke2k@mtmail.mtsu.edu)
+Myles Chisholm (mc8a - mc8a@mtmail.mtsu.edu)
