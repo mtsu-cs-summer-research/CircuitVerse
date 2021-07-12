@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sidekiq-deployment
+  labels:
+    app: sidekiq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sidekiq
+  template:
+    metadata:
+      labels:
+        app: sidekiq
+    spec:
+      containers:
+      - name: sidekiq
+        image: sidekiq
+        volumeMounts:
+        - name: bundle
+          mountPath: /circuitverse/.bundle
+        - name: node_modules
+          mountPath: /circuitverse/node_modules
+        - name: circuitverse
+          mountPath: .:/circuitverse
+        - name: database
+          mountPath: ./config/database.docker.yml:/circuitverse/config/database.yml
+        env:
+          - name: REDIS_URL
+            value: “redis://redis:6379/0”
+          - name: COMM_ARG
+            value: “exec sidekiq -q default -q mailers”
+        command: [“bundle”]
+        args: [“$(COMM_ARG)”]
+        ports:
+        - containerPort: 5432
+      volumes:
+        - name: bundle
+          emptyDir: {}
+        - name: node_modules
+          emptyDir: {}
+        - name: circuitverse
+          emptyDir: {}
+        - name: database
+          emptyDir: {}
