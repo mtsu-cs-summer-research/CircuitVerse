@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
       - name: sidekiq
-        image: sidekiq
+        image: jlphillips/circuitverse_sidekiq
         volumeMounts:
         - name: bundle
           mountPath: /circuitverse/.bundle
-        - name: node_modules
+        - name: node-modules
           mountPath: /circuitverse/node_modules
         - name: circuitverse
           mountPath: .:/circuitverse
@@ -29,17 +29,17 @@ spec:
           mountPath: ./config/database.docker.yml:/circuitverse/config/database.yml
         env:
           - name: REDIS_URL
-            value: “redis://redis:6379/0”
+            value: "redis://redis:6379/0"
           - name: COMM_ARG
-            value: “exec sidekiq -q default -q mailers”
-        command: [“bundle”]
-        args: [“$(COMM_ARG)”]
+            value: "exec sidekiq -q default -q mailers"
+        command: ["bundle"]
+        args: ["exec","sidekiq","-q","default","-q","mailers"]
         ports:
         - containerPort: 5432
       volumes:
         - name: bundle
           emptyDir: {}
-        - name: node_modules
+        - name: node-modules
           emptyDir: {}
         - name: circuitverse
           emptyDir: {}
