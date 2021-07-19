@@ -19,29 +19,39 @@ spec:
       - name: sidekiq
         image: jlphillips/circuitverse_sidekiq
         volumeMounts:
+        - name: circuitverse
+          mountPath: /circuitverse
         - name: bundle
           mountPath: /circuitverse/.bundle
         - name: node-modules
           mountPath: /circuitverse/node_modules
-        - name: circuitverse
-          mountPath: .:/circuitverse
         - name: database
-          mountPath: ./config/database.docker.yml:/circuitverse/config/database.yml
+          mountPath: /circuitverse/config/database.yml
+          subPath: database.docker.yml
         env:
           - name: REDIS_URL
             value: "redis://redis:6379/0"
           - name: COMM_ARG
             value: "exec sidekiq -q default -q mailers"
+        # command: ["sleep","infinity"]
         command: ["bundle"]
         args: ["exec","sidekiq","-q","default","-q","mailers"]
         ports:
         - containerPort: 6379
       volumes:
-        - name: bundle
-          emptyDir: {}
-        - name: node-modules
-          emptyDir: {}
         - name: circuitverse
-          emptyDir: {}
+          hostPath:
+            path: /home/jphillips/CircuitVerse
+            type: Directory
+        - name: bundle
+          hostPath:
+            path: /home/jphillips/CircuitVerse/.bundle
+            type: Directory
+        - name: node-modules
+          hostPath:
+            path: /home/jphillips/CircuitVerse/node_modules
+            type: Directory
         - name: database
-          emptyDir: {}
+          hostPath:
+            path: /home/jphillips/CircuitVerse/config
+            # type: Directory
