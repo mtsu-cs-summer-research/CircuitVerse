@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webpacker-deployment
+  labels:
+    app: webpacker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webpacker
+  template:
+    metadata:
+      labels:
+        app: webpacker
+    spec:
+      containers:
+      - name: webpacker
+        image: jlphillips/circuitverse_webpacker
+        command: ["/circuitverse/bin/docker_webpacker_run"]
+        volumeMounts:
+                - name: bundle
+                  mountPath: /circuitverse/.bundle
+                - name: node-modules
+                  mountPath: /circuitverse/node_modules
+                - name: circuitverse
+                  mountPath: .:/circuitverse
+                - name: database
+                  mountPath: ./config/database.docker.yml:/circuitverse/config/database.yml
+        env:
+          - name: NODE_ENV
+            value: "development"
+          - name: RAILS_ENV
+            value: "development"
+          - name: WEBPACKER_DEV_SERVER_HOST
+            value: "0.0.0.0"
+        ports:
+          - containerPort: 3035
+      volumes:
+              - name: bundle
+                emptyDir: {}
+              - name: node-modules
+                emptyDir: {}
+              - name: circuitverse
+                emptyDir: {}
+              - name: database
+                emptyDir: {}
