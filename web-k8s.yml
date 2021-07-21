@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: jlphillips/circuitverse_web
+        volumeMounts:
+                - name: bundle
+                  mountPath: /circuitverse/.bundle
+                - name: node_modules
+                  mountPath: /circuitverse/node_modules
+                - name: circuitverse
+                  mountPath: .:/circuitverse
+                - name: database
+                  mountPath: ./config/database.docker.yml:/circuitverse/config/database.yml
+        env:
+          - name: REDIS_URL
+            value: "redis://redis:6379/0"
+          - name: CIRCUITVERSE_USE_SOLR
+            value: "false"
+          - name: WEBPACKER_DEV_SERVER_HOST
+            value: "webpacker"
+        ports:
+          - containerPort: 3000
+      volumes:
+              - name: bundle
+                emptyDir: {}
+              - name: node_modules
+                emptyDir: {}
+              - name: circuitverse
+                emptyDir: {}
+              - name: database
+                emptyDir: {}
+
