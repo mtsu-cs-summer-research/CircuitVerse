@@ -19,14 +19,15 @@ spec:
         image: jlphillips/circuitverse_web
         command: ["/circuitverse/bin/docker_run"]
         volumeMounts:
+                - name: circuitverse
+                  mountPath: /circuitverse
                 - name: bundle
                   mountPath: /circuitverse/.bundle
                 - name: node-modules
                   mountPath: /circuitverse/node_modules
-                - name: circuitverse
-                  mountPath: /circuitverse
                 - name: database
-                  mountPath: /config/database.docker.yml:/circuitverse/config/database.yml
+                  mountPath: /circuitverse/config/database.yml
+                  subPath: database.docker.yml
         env:
           - name: REDIS_URL
             value: "redis://redis:6379/0"
@@ -37,15 +38,15 @@ spec:
         ports:
           - containerPort: 3000
       volumes:
+              - name: circuitverse
+                hostPath:
+                        path: /home/jphillips/CircuitVerse
               - name: bundle
                 hostPath:
                         path: /home/jphillips/CircuitVerse/.bundle
               - name: node-modules
                 hostPath:
                         path: /home/jphillips/CircuitVerse/node-modules
-              - name: circuitverse
-                hostPath:
-                        path: /home/jphillips/CircuitVerse/.
               - name: database
                 hostPath:
                         path: /home/jphillips/CircuitVerse/config
