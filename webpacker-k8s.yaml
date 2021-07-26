@@ -18,7 +18,7 @@ spec:
       - name: webpacker
         image: jlphillips/circuitverse_webpacker
         command: ["/bin/sh","-c"]
-        args: ["yarn", "install", "--check-files", "&&", "/circuitverse/bin/docker_webpacker_run"]
+        args: ["yarn install --check-files && /circuitverse/bin/docker_webpacker_run"]
         volumeMounts:
           - name: circuitverse
             mountPath: /circuitverse
