@@ -46,7 +46,7 @@ spec:
             path: /home/jphillips/CircuitVerse/.bundle
         - name: node-modules
           hostPath:
-            path: /home/jphillips/CircuitVerse/node-modules
+            path: /home/jphillips/CircuitVerse/node_modules
         - name: database
           hostPath:
             path: /home/jphillips/CircuitVerse/config

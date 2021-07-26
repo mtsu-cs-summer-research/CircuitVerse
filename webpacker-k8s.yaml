@@ -17,7 +17,8 @@ spec:
       containers:
       - name: webpacker
         image: jlphillips/circuitverse_webpacker
-        command: ["/circuitverse/bin/docker_webpacker_run"]
+        command: ["/bin/sh","-c"]
+        args: ["yarn", "install", "--check-files", "&&", "/circuitverse/bin/docker_webpacker_run"]
         volumeMounts:
           - name: circuitverse
             mountPath: /circuitverse
@@ -43,7 +44,7 @@ spec:
             path: /home/jphillips/CircuitVerse/.bundle
         - name: node-modules
           hostPath:
-            path: /home/jphillips/CircuitVerse/node-modules
+            path: /home/jphillips/CircuitVerse/node_modules
 ---
 apiVersion: v1
 kind: Service
